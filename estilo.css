@@ -67,8 +67,10 @@ body {
 }
 
 .popup-button {
-  background: linear-gradient(90deg, #8e4ec6 0%, #ffd700 100%);
-  color: #ffffff;
+  position: relative;    /* Para que el ::before quede confinado al botón */
+  overflow: hidden;      /* Oculta todo lo que exceda los bordes del botón */
+  background: linear-gradient(113.27deg, #5428b4 15.04%, #b339e2 84.96%);
+  color: white;
   font-family: 'Jugabet', 'Bebas Neue', sans-serif;
   font-size: 22px;
   padding: 18px 30px;
@@ -78,13 +80,10 @@ body {
   align-items: center;
   justify-content: center;
   gap: 14px;
-  box-shadow: 0 0 18px rgba(19, 240, 46, 0.25),
-              0 0 10px rgba(22, 65, 26, 0.4) inset;
+  box-shadow: 0 0 18px rgba(199, 125, 255, 0.4), 0 0 10px rgba(123, 44, 191, 0.4) inset;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   animation: pulse 1s infinite ease-in-out;
-  position: relative;
-  overflow: hidden;
   text-align: center;
 }
 
