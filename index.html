@@ -3,21 +3,84 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Test-1</title>
   <!-- ① Para Android Chrome y algunos navegadores basados en Chromium -->
-<meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#000000" />
 
-<!-- ② Para iOS Safari con pantalla “abre en pantalla completa” (PWA), si aplica -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- ② Para iOS Safari con pantalla “abre en pantalla completa” (PWA), si aplica -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<!-- ③ Para que iOS reserve el área del notch y puedas aplicar color de fondo allí -->
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- ③ Para que iOS reserve el área del notch y puedas aplicar color de fondo allí -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="estilo.css">
+
+  <!-- ==== Estilos para notificaciones ==== -->
+  <style>
+    .notif-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 280px;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .notif {
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #FFD700;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      opacity: 0;
+      transform: translateX(100%);
+      animation: slideIn 0.5s forwards, fadeOut 0.5s 3.5s forwards;
+    }
+    .notif img {
+      width: 36px;
+      height: 36px;
+      margin-right: 8px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .notif .texto {
+      font-size: 13px;
+      line-height: 1.2;
+    }
+    .notif .texto .usuario {
+      font-weight: bold;
+    }
+    .notif .texto .juego {
+      display: block;
+      margin-top: 4px;
+      font-size: 15px;
+      text-transform: uppercase;
+    }
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <!-- Contenedor de notificaciones -->
+  <div class="notif-container" id="notifContainer"></div>
+
   <div class="logo-wrapper">
     <img class="logo" src="img/logo-nobg.png" alt="Logo">
   </div>
@@ -50,7 +113,7 @@
       <img src="img/game.pragmaticPlayCongoCash.thumbnail.512x512_v3.png" alt="Jackpot">
     </div>
   </div>
-  
+
   <div class="info-externa">
     <p>JUGA CON CONFIANZA Y RETIRA HASTA 2.000.000 DIARIOS</p>
     <p>RULETA EN VIVO - SLOTS - APUESTAS</p>
@@ -67,6 +130,35 @@
   </div>
 
   <script>
+    // ==== NOTIFICACIONES ====
+    const datosNotif = [
+      { user: "S****56", amount: "250.000", game: "Joker Jewels", img: "img/game.pragmaticPlayJokersJewels.thumbnail.512x512_v3.png" },
+      { user: "L***23", amount: "120.000", game: "Gates of Olympus", img: "img/game.pragmaticPlayGatesOfOlympus.thumbnail.512x512_v4.png" },
+      { user: "M**78", amount: "90.500", game: "Sweet Bonanza", img: "img/game.pragmaticPlaySweetBonanza.thumbnail.512x512_v4.png" },
+      // añade más si quieres...
+    ];
+    const cont = document.getElementById("notifContainer");
+    function mostrarNotif({ user, amount, game, img }) {
+      const n = document.createElement("div");
+      n.className = "notif";
+      n.innerHTML = `
+        <img src="${img}" alt="${game}">
+        <div class="texto">
+          <span class="usuario">${user}</span> ganó <span class="amount">${amount}</span>
+          <span class="juego">${game}</span>
+        </div>`;
+      cont.appendChild(n);
+      setTimeout(() => n.remove(), 4000);
+    }
+    // Mostrar una al cargar
+    mostrarNotif(datosNotif[0]);
+    // Luego cada 5s
+    setInterval(() => {
+      const item = datosNotif[Math.floor(Math.random() * datosNotif.length)];
+      mostrarNotif(item);
+    }, 5000);
+
+    // ==== WHATSAPP BUTTON ====
     document.getElementById("whatsappButton").addEventListener("click", function () {
       const nombre = document.getElementById("nombreUsuario").value.trim();
       const mensaje = nombre
@@ -74,11 +166,10 @@
         : "Buenas! Me gustaría crear un usuario.";
       const telefono = "5493586541581";
       window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, "_blank");
-      // ✅ Enviar evento solo cuando el usuario hace clic
-  if (typeof fbq === "function") {
-    fbq('track', 'Subscribe');
-  }
+      if (typeof fbq === "function") fbq('track', 'Subscribe');
     });
   </script>
 </body>
+
 </html>
+
