@@ -112,8 +112,8 @@ body {
 
 .popup-button:hover {
   transform: scale(1.08);
-  box-shadow: 0 0 30px rgba(19, 240, 46, 0.5),
-              0 0 18px rgba(22, 65, 26, 0.5) inset;
+  box-shadow: 0 0 30px #b800ff,
+              0 0 18px #b800ff inset;
 }
 
 .popup-button:hover img {
