@@ -177,7 +177,7 @@ body {
 .dorado-neon {
  color: #b339e2;
   font-size: 42px;
-  text-shadow: 0 0 15px #13f02e, 0 0 30px #01ac14;
+  text-shadow: 0 0 15px #b800ff, 0 0 30px #b800ff;
   animation: glow-verde 2s infinite ease-in-out;
 }
 
