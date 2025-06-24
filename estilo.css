@@ -10,6 +10,7 @@ html {
   background-color: #000;
   /* ② Permitir que el body entre en la zona de Safe Area en iOS */
   height: 100%;
+  }
 
 body {
   margin: 0;
